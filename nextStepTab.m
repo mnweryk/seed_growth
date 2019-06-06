@@ -4,7 +4,7 @@ function [next_tab, completed] = nextStepTab(extended_tab, neighbourhood)
     completed = 1;
     for row=2:sh1-1
         for column=2:sh2-1
-            neighbours = countNeighbours(row, column, extended_tab, neighbourhood);
+            neighbours = countNeighbours(row, column, extended_tab, neighbourhood, -1);
             if extended_tab(row, column) == 0
                 if neighbours == 0
                     completed = -1;
