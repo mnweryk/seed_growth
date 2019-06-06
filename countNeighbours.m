@@ -1,4 +1,4 @@
-function neighbours = countNeighbours(row, column, tab, neighbourhood)
+function neighbours = countNeighbours(row, column, tab, neighbourhood, myValue)
     if neighbourhood == 1
         %Von Neumann
         uppanddown = tab(row-1:2:row+1, column);
@@ -63,12 +63,23 @@ function neighbours = countNeighbours(row, column, tab, neighbourhood)
     end
     
     %rest
-    neighbours = neighbours(neighbours~=0);
-    if size(neighbours, 1)*size(neighbours, 2) > 0
-    neighbours = neighbours(randi(size(neighbours, 2)*size(neighbours,1))) ;
-    else
-        neighbours = 0;
+    if myValue == -1     %seeding and growth
+        neighbours = neighbours(neighbours~=0);
+        if size(neighbours, 1)*size(neighbours, 2) > 0
+        neighbours = neighbours(randi(size(neighbours, 2)*size(neighbours,1))) ;
+        else
+            neighbours = 0;
+        end
+    elseif myValue == -2    %check if dislocation tab in neighbours is bigger than yours
+        neighbours = neighbours(neighbours~=0);
+    else                %recrystalization
+        neighbours = neighbours(neighbours~=0);
+        neighbours = neighbours(neighbours~=myValue);
+        if size(neighbours, 1)*size(neighbours, 2) > 0
+        neighbours = neighbours(randi(size(neighbours, 2)*size(neighbours,1))) ;
+        else
+            neighbours = 0;
+        end
     end
-    
 end
 
